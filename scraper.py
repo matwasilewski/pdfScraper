@@ -51,7 +51,7 @@ for link in soup.findAll('a', attrs={'href': re.compile("^http://.*(/\w*\.[pP][d
 
     # Download PDFs
     try:
-        print(filename)
+        # print(filename)
         urllib.request.urlretrieve(link_pdf, filename) 
     
     except urllib.error.HTTPError as e:
