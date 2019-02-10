@@ -12,18 +12,23 @@ webpage = urllib.request.urlopen(url_address)
 # Create soup object
 soup = BeautifulSoup(webpage, 'html.parser')
 
+filename_regex = re.compile('(\w*.pdf)$')
 
-"""
-# Downloading the HTML file of the webpage
-requested_webpage = urllib.URLopener()
+# Find every tag 'a' in the soup
+for link in soup.findAll('a', attrs={'href': re.compile("^http://.*(/\w*\.[pP][dD][fF])$")}):
+    
+    # save direct link to the pdf as a separate variable
+    link_pdf = link.get('href')
 
-requested_webpage.retrieve("webpage.html", "webpage.html")
-
-
-web_content = requested_webpage.read()
-
-with open("webpage.html", mode='w') as web_file:
-    web_file.write(web_content)
-
-print(web_content[0:100])
-"""
+    # uncomment for testing purposes
+    # print(link_pdf)
+    
+    match_object = filename_regex.search(link_pdf)
+    #match_object = re.match(filename_regex, link_pdf)
+    filename = match_object.group(0)
+    
+    try: 
+        urllib.request.urlretrieve(link_pdf, filename) 
+    
+    except urllib.error.HTTPError as e:
+        print("Sorry, there is nothing at this link! Proceeding to the next!")
