@@ -39,7 +39,7 @@ for link in soup.findAll('a', attrs={'href': re.compile("^http://.*(/\w*\.[pP][d
     filename = directory_name + '/' + match_object.group(2)
     
     # uncomment for testing purposes
-    print("Directory: " + directory_name)
+    # print("Directory: " + directory_name)
     # print("Filename: " + filename)
 
     # Create directory
